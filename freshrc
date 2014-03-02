@@ -1,0 +1,37 @@
+# freshshell.com
+#
+# Examples:
+#
+#   fresh twe4ked/dotfiles shell/functions/\*
+#   fresh jasoncodes/dotfiles shell/aliases/rails.sh
+#   fresh jasoncodes/dotfiles config/tmux.conf --file
+#
+# See http://freshshell.com/readme for documentation.
+
+fresh freshshell/fresh bin/fresh --bin
+
+fresh fmosca/dotfiles vimrc --file
+fresh fmosca/dotfiles vim --file=~/.vim/
+
+fresh rizzatti/funcoo.vim . --file=~/.vim/bundle/funcoo/
+fresh mileszs/ack.vim . --file=~/.vim/bundle/ack/
+fresh stephpy/vim-phpdoc . --file=~/.vim/bundle/phpdoc/
+fresh tpope/vim-fugitive . --file=~/.vim/bundle/fugitive/
+fresh tpope/vim-eunuch . --file=~/.vim/bundle/eunuch/
+fresh tpope/vim-surround . --file=~/.vim/bundle/surround/
+fresh tpope/vim-dispatch . --file=~/.vim/bundle/dispatch/
+fresh vim-scripts/scratch.vim . --file=~/.vim/bundle/scratch/
+fresh vim-scripts/YankRing.vim . --file=~/.vim/bundle/yankring/
+fresh majutsushi/tagbar . --file=~/.vim/bundle/tagbar/
+fresh vim-php/tagbar-phpctags.vim . --file=~/.vim/bundle/tagbar-phpctags/
+fresh lunaru/vim-twig.git . --file=~/.vim/bundle/twig/
+fresh vim-scripts/LustyJuggler . --file=~/.vim/bundle/lustyjuggler/
+fresh scrooloose/nerdtree . --file=~/.vim/bundle/nerdtree/
+fresh scrooloose/syntastic . --file=~/.vim/bundle/syntastic/
+fresh jonyamo/phpunit.vim . --file=~/.vim/bundle/phpunit/
+fresh gmarik/sudo-gui.vim . --file=~/.vim/bundle/sudo-gui/
+fresh bling/vim-airline . --file=~/.vim/bundle/airline/
+fresh airblade/vim-gitgutter . --file=~/.vim/bundle/gitgutter/
+fresh nathanaelkane/vim-indent-guides . --file=~/.vim/bundle/indent-guides/
+fresh jeffkreeftmeijer/vim-numbertoggle . --file=~/.vim/bundle/numbertoggle/
+fresh dbakker/vim-projectroot . --file=~/.vim/bundle/projectroot/
