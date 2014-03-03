@@ -67,3 +67,6 @@
 [submodule "vim/bundle/php-syntax"]
 	path = vim/bundle/php-syntax
 	url = git@github.com:joshtronic/php.vim
+[submodule "vim/bundle/twig"]
+	path = vim/bundle/twig
+	url = git@github.com:lunaru/vim-twig
