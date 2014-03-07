@@ -45,6 +45,7 @@ set textwidth=0
 set nowrap
 
 " Show line numbers by default
+set relativenumber
 set number
 if has('gui_running')
   set lines=70
@@ -235,6 +236,8 @@ inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+autocmd InsertLeave * :set number
+
 " Remap code completion to Ctrl+Space
 inoremap <C-space> <C-x><C-o>
 
@@ -364,6 +367,7 @@ let g:syntastic_php_phpcs_args='--report=csv --standard=PSR2'
 
 let g:phpunit_command = "Dispatch /usr/local/bin/phpunit -c app {test}"
 
+let g:rootmarkers = ['.svn', '.git', '.proj']
 noremap <leader>mf :ProjectRootExe call PHPUnitRunCurrentFile()<cr>
 nnoremap <leader>mt :ProjectRootExe call PHPUnitRunCurrentTest()<cr>
 nnoremap <leader>mp :ProjectRootExe call PHPUnitRunPreviousTest()<cr>
