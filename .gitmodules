@@ -73,3 +73,6 @@
 [submodule "vim/bundle/yaml"]
 	path = vim/bundle/yaml
 	url = git@github.com:stephpy/vim-yaml
+[submodule "vim/bundle/vdebug"]
+	path = vim/bundle/vdebug
+	url = git@github.com:joonty/vdebug

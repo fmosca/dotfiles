@@ -365,7 +365,7 @@ let g:airline_right_sep='▟'
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']  
 let g:syntastic_php_phpcs_args='--report=csv --standard=PSR2'
 
-let g:phpunit_command = "Dispatch /usr/local/bin/phpunit -c app {test}"
+let g:phpunit_command = "Dispatch /usr/local/bin/phpunit -c app --stop-on-failure --stop-on-error {test}"
 
 let g:rootmarkers = ['.svn', '.git', '.proj']
 noremap <leader>mf :ProjectRootExe call PHPUnitRunCurrentFile()<cr>
@@ -393,3 +393,25 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
+
+let g:vdebug_options = {}
+let g:vdebug_options["break_on_open"] = 0
+
+
+au FileType qf call AdjustWindowHeight(3, 20)
+function! AdjustWindowHeight(minheight, maxheight)
+    let l = 1
+    let n_lines = 0
+    let w_width = winwidth(0)
+    while l <= line('$')
+        " number to float for division
+        let l_len = strlen(getline(l)) + 0.0
+        let line_width = l_len/w_width
+        let n_lines += float2nr(ceil(line_width))
+        let l += 1
+    endw
+    exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
+
+let g:tagbar_ctags_bin = "/usr/local/bin/ctags"
