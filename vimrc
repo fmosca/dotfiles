@@ -1,5 +1,6 @@
 execute pathogen#infect()
 
+let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set background=dark
 if has('gui_running')
   set t_Co=256
@@ -47,10 +48,6 @@ set nowrap
 " Show line numbers by default
 set relativenumber
 set number
-if has('gui_running')
-  set lines=70
-  set columns=180
-endif
 
 " Enable folding by fold markers
 "set foldmethod=marker 
@@ -86,7 +83,7 @@ set linespace=4
 "let Tlist_WinWidth = 50
 "
 "nnoremap <silent> <F8> :TlistToggle<CR>
-let g:tagbar_phpctags_bin='/opt/phpctags/phpctags'
+"let g:tagbar_phpctags_bin='/opt/phpctags/phpctags'
 nnoremap <silent> <F8> :TagbarToggle<CR>
 
 filetype on
@@ -415,3 +412,17 @@ endfunction
 
 
 let g:tagbar_ctags_bin = "/usr/local/bin/ctags"
+
+
+inoremap <Leader>u <C-O>:call PhpInsertUse()<CR>
+noremap <Leader>u :call PhpInsertUse()<CR>
+
+inoremap <Leader>e <C-O>:call PhpExpandClass()<CR>
+noremap <Leader>e :call PhpExpandClass()<CR>
+
+" Start interactive EasyAlign in visual mode
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign with a Vim movement
+nmap <Leader>a <Plug>(EasyAlign)
+
