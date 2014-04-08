@@ -177,9 +177,9 @@ noremap   <Leader>v :vsplit<CR>
 noremap   <Leader>c :close<CR>
 noremap   <Leader>s V`] 
 noremap   <Leader>~ :lcd %:p:h<CR>
-noremap   <Leader>` :call ToProjBase(expand("%:p:h"), 1)<CR>
-noremap   <Leader>t :call ToProjBase(expand("%:p:h"), 0)<CR>:CommandT<CR>
-noremap   <Leader>T :call ToProjBase(expand("%:p:h"), 0)<CR>:CommandTFlush<CR>:CommandT<CR>
+noremap   <Leader>` :ProjectRootCD<CR>
+noremap   <Leader>t :ProjectRootExe CommandT<CR>
+noremap   <Leader>T :ProjectRootExe CommandTFlush<CR>:CommandT<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 " http://vim.wikia.com/wiki/View_text_file_in_two_columns
@@ -245,7 +245,8 @@ set completeopt=longest,menuone
 :hi link cssClassName Special
 
 
-let g:ackprg="ack\\ -H\\ -a\\ --nocolor\\ --nogroup"
+"let g:ackprg="ack\\ -H\\ -a\\ --nocolor\\ --nogroup"
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 
 if !exists(":DiffOrig")
@@ -368,6 +369,7 @@ let g:rootmarkers = ['.svn', '.git', '.proj']
 noremap <leader>mf :ProjectRootExe call PHPUnitRunCurrentFile()<cr>
 nnoremap <leader>mt :ProjectRootExe call PHPUnitRunCurrentTest()<cr>
 nnoremap <leader>mp :ProjectRootExe call PHPUnitRunPreviousTest()<cr>
+nnoremap <C-i> :ProjectRootExe Ack! <C-r><C-w><CR>
 
 aug QFClose
   au!
@@ -425,4 +427,33 @@ vmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign with a Vim movement
 nmap <Leader>a <Plug>(EasyAlign)
+nmap <CR> za
 
+nnoremap <silent> <leader>zj :call NextClosedFold('j')<cr>
+nnoremap <silent> <leader>zk :call NextClosedFold('k')<cr>
+function! NextClosedFold(dir)
+    let cmd = 'norm!z' . a:dir
+    let view = winsaveview()
+    let [l0, l, open] = [0, view.lnum, 1]
+    while l != l0 && open
+        exe cmd
+        let [l0, l] = [l, line('.')]
+        let open = foldclosed(l) < 0
+    endwhile
+    if open
+        call winrestview(view)
+    endif
+endfunction
+
+function! NeatFoldText() "{{{2
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  let foldchar = '—' "matchstr(&fillchars, 'fold:\zs.')
+  let foldtextstart = strpart(' ' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 8)
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+set foldtext=NeatFoldText()
+" }}}2
