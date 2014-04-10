@@ -76,3 +76,6 @@
 [submodule "vim/bundle/vdebug"]
 	path = vim/bundle/vdebug
 	url = git@github.com:joonty/vdebug
+[submodule "vim/bundle/QFenter"]
+	path = vim/bundle/QFenter
+	url = git@github.com:vim-scripts/QFEnter
