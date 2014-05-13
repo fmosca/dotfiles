@@ -179,7 +179,7 @@ noremap   <Leader>s V`]
 noremap   <Leader>~ :lcd %:p:h<CR>
 noremap   <Leader>` :ProjectRootCD<CR>
 noremap   <Leader>t :ProjectRootExe CommandT<CR>
-noremap   <Leader>T :ProjectRootExe CommandTFlush<CR>:CommandT<CR>
+noremap   <Leader>T :CommandTFlush<CR>:ProjectRootExe CommandT<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 " http://vim.wikia.com/wiki/View_text_file_in_two_columns
@@ -457,3 +457,26 @@ function! NeatFoldText() "{{{2
 endfunction
 set foldtext=NeatFoldText()
 " }}}2
+
+
+let g:qfenter_open_map = ['<Leader><CR>', '<2-LeftMouse>'] 
+
+function! GitExecInPath(cmd) "{{{2
+  if exists('b:git_dir')
+    let path = b:git_dir
+  else
+    let path = fugitive#extract_git_dir('.')
+  endif
+  let path = fnamemodify(path, ':h')
+
+  return system('cd ' . path . '; ' . a:cmd)
+endfunction
+" }}}2
+
+augroup gitctags
+    au!
+    au BufWritePost *.php :call GitExecInPath('git ctags --src-only &')
+augroup END
+
+:imap <C-J> <Plug>snipMateNextOrTrigger
+:smap <C-J> <Plug>snipMateNextOrTrigger

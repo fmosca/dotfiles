@@ -1,0 +1,9 @@
+snippet nn
+	<?php
+
+	namespace ${1:`substitute(substitute(expand("%:p:h"), '.*src/', '', '1'), '/', '\', 'g')`};
+
+	class ${2:`Filename('', 'myClass')`}
+	{
+		${3}
+	}

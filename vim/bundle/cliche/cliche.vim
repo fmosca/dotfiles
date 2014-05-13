@@ -1,0 +1,1 @@
+/opt/cliche-1.1.0/plugins/vim/cliche.vim
