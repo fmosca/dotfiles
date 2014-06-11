@@ -91,3 +91,6 @@
 [submodule "vim/bundle/snippets"]
 	path = vim/bundle/snippets
 	url = git@github.com:honza/vim-snippets.git
+[submodule "vim/bundle/vim-scala"]
+	path = vim/bundle/vim-scala
+	url = git@github.com:derekwyatt/vim-scala.git
