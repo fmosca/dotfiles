@@ -94,3 +94,9 @@
 [submodule "vim/bundle/vim-scala"]
 	path = vim/bundle/vim-scala
 	url = git@github.com:derekwyatt/vim-scala.git
+[submodule "vim/bundle/renamer"]
+	path = vim/bundle/renamer
+	url = https://github.com/vim-scripts/renamer.vim
+[submodule "vim/bundle/nerdtree-git-plugin"]
+	path = vim/bundle/nerdtree-git-plugin
+	url = https://github.com/Xuyuanp/nerdtree-git-plugin

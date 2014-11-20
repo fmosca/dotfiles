@@ -264,6 +264,7 @@ else
     \ "    {\n" .
     \ "        return $this->%varname%;\n" .
     \ "    }"
+    \ "    \n" .
 endif
 
 
@@ -283,6 +284,7 @@ else
   \ "        $this->%varname% = $%varname%;\n" .
   \ "        return $this;\n" . 
   \ "    }"
+  \ "    \n" .
 endif
 
 
