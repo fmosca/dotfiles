@@ -1,0 +1,28 @@
+#!/bin/sh
+set -e
+PATH="/usr/local/bin:$PATH"
+trap "rm -f .git/tags.$$" EXIT
+ctags --tag-relative -Rf.git/tags.$$ -h \".php\" \
+      --PHP-kinds=cfiv \
+      --exclude=.git --languages=-javascript,sql \
+      --exclude=app/cache \
+      --exclude=.puppet \
+      --languages=php \
+      --fields=+aimS  \
+      src
+mv .git/tags.$$ .git/tags
+
+if [ "$1" != "--src-only" ]; then
+
+    trap "rm -f .git/php.tags.$$" EXIT
+    ctags --tag-relative -Rf.git/php.tags.$$ -h \".php\" \
+        --PHP-kinds=cfiv \
+        --exclude=.git --languages=-javascript,sql \
+        --exclude=app/cache \
+        --exclude=.puppet \
+        --languages=php \
+        --fields=+aimS  \
+        vendor
+    mv .git/php.tags.$$ .git/php.tags
+
+fi
