@@ -97,3 +97,12 @@
 [submodule "vim/bundle/vim-phpspec"]
 	path = vim/bundle/vim-phpspec
 	url = git@github.com:rafi/vim-phpspec.git
+[submodule "vim/bundle/renamer"]
+	path = vim/bundle/renamer
+	url = https://github.com/vim-scripts/renamer.vim
+[submodule "vim/bundle/nerdtree-git-plugin"]
+	path = vim/bundle/nerdtree-git-plugin
+	url = https://github.com/Xuyuanp/nerdtree-git-plugin
+[submodule "vim/bundle/nerdtree-ack"]
+	path = vim/bundle/nerdtree-ack
+	url = https://github.com/tyok/nerdtree-ack

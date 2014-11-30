@@ -1,0 +1,43 @@
+[user]
+	name = Francesco Mosca
+	email = f.mosca@dnsee.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = 1
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 0x0+0+0
+	main-window-view = HistoryView
+	history-view-vpane-position = 580
+[alias]
+    amend = commit --amend -C HEAD
+    meld = !/opt/git-meld/git-meld.pl
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+    ss = status -s
+    co = checkout
+	ctags = !.git/hooks/ctags
+    bb = for-each-ref --sort=committerdate refs/heads/ --format="%(authordate:short)%09%(objectname:short)%09%1B[0;33m%(refname:short)%1B[m%09(%(authorname))" 
+[core]
+	excludesfile = /Users/fra/.gitignore
+    quotepath = false
+	editor = mvim -v
+    precomposeunicode = true
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[branch "master"]
+	rebase = false
+[rebase]
+	stat = true
+[branch "develop"]
+	rebase = false
+[init]
+	templatedir = ~/.git_template
+[merge]
+	tool = meld

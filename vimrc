@@ -35,6 +35,15 @@ set guioptions-=T
 set guioptions-=m
 set backspace=indent,eol,start
 set wildignore+=**/cache/**
+set diffopt+=vertical
+
+
+" simplify diff colors
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
 
 " Automatically reload .vimrc when changing
 autocmd! bufwritepost .vimrc source %
@@ -68,6 +77,8 @@ syntax on
 "set guifont=Envy\ Code\ R:h13
 "set gfn=Envy\ Code\ R:h13
 
+"set guifont=M\+\ 2m\ medium:h13
+"set gfn=M\+\ 2m\ medium:h13
 set guifont=Fantasque\ Sans\ Mono:h14
 set gfn=Fantasque\ Sans\ Mono:h14
 "set gfn=Inconsolata-dz:h12
@@ -138,7 +149,8 @@ vim.command('execute ":silent! lcd ' + destPath + '"');
 EOF
 endfunction
 
-autocmd BufEnter * lcd %:p:h
+" autocmd BufEnter * lcd %:p:h
+autocmd BufEnter * if expand("%:p:h") !~ '^fugitive://' | silent! lcd %:p:h | endif
 
 let &guicursor = &guicursor . ",a:blinkon0"
 
@@ -193,7 +205,6 @@ set directory=/tmp
 set backupdir=/Users/fra/.backup
 
 au FileType php nnoremap <Leader>p :!uzbl -g maximized /usr/share/doc/php-doc/html/function.<c-r><c-w>.html > /dev/null 2>&1<cr><cr>
-au FileType php map <leader>h :call OpenPhpFunction('<c-r><c-w>')<cr>
 
 let g:sparkupNextMapping = '<c-g>'
 
@@ -253,6 +264,7 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
           \ | wincmd p | diffthis
 endif
+
 
 
 " Mappings to access buffers (don't use "\p" because a
