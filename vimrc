@@ -381,6 +381,7 @@ let g:rootmarkers = ['.svn', '.git', '.proj']
 noremap <leader>mf :ProjectRootExe call PHPUnitRunCurrentFile()<cr>
 nnoremap <leader>mt :ProjectRootExe call PHPUnitRunCurrentTest()<cr>
 nnoremap <leader>mp :ProjectRootExe call PHPUnitRunPreviousTest()<cr>
+nnoremap <leader>ss :ProjectRootExe PhpSpecSwitch<cr>
 nnoremap <C-i> :ProjectRootExe Ack! <C-r><C-w><CR>
 
 aug QFClose
