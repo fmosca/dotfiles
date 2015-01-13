@@ -224,7 +224,7 @@ set guioptions-=L
 "
 set colorcolumn=85
 hi ColorColumn guibg=#383838
-hi ColorColumn ctermbg=Black
+hi ColorColumn ctermbg=236
 set undofile
 set undodir=/tmp
 " set rnu
