@@ -1,14 +1,19 @@
 execute pathogen#infect()
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
+set t_Co=256
+syntax on
 set background=dark
-if has('gui_running')
-  set t_Co=256
-  colorscheme wombat
-else
-  set t_Co=64
-  colorscheme zenburn
-endif 
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans = 1
+colorscheme jellybeans
+"if has('gui_running')
+"  set t_Co=256
+"  colorscheme wombat
+"else
+"  set t_Co=64
+"  colorscheme zenburn
+"endif 
 
 set nosmartindent
 set nocompatible
@@ -36,6 +41,8 @@ set guioptions-=m
 set backspace=indent,eol,start
 set wildignore+=**/cache/**
 set diffopt+=vertical
+set clipboard=unnamed
+set mouse=nicr
 
 
 " simplify diff colors
@@ -71,7 +78,6 @@ set scrolljump=1
 " Indicate jump out of the screen when 3 lines before end of the screen
 set scrolloff=1
 
-syntax on
 
 " set gfn=Bitstream\ Vera\ Sans\ Mono\ 9
 "set guifont=Envy\ Code\ R:h13
@@ -86,7 +92,6 @@ set gfn=Fantasque\ Sans\ Mono:h14
 "set guifont=Cousine:h12
 "set gfn=Cousine:h12
 "set guifont=Consolas:h10
-set linespace=4
 
 
 "let Tlist_Use_Right_Window = 1
@@ -252,6 +257,7 @@ inoremap <C-space> <C-x><C-o>
 set splitbelow
 
 set completeopt=longest,menuone
+set complete-=i
 
 :hi link cssClassName Special
 
@@ -368,8 +374,8 @@ vmap <silent> <leader>x :FormatXML<CR>
 
 let g:airline_powerline_fonts = 1
 
-let g:airline_left_sep='▙ '
-let g:airline_right_sep='▟'
+"let g:airline_left_sep='▙ '
+"let g:airline_right_sep='▟'
 
 
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']  
