@@ -499,3 +499,6 @@ augroup END
 
 :imap <C-J> <Plug>snipMateNextOrTrigger
 :smap <C-J> <Plug>snipMateNextOrTrigger
+
+
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
