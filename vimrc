@@ -210,6 +210,7 @@ set directory=/tmp
 set backupdir=/Users/fra/.backup
 
 au FileType php nnoremap <Leader>p :!uzbl -g maximized /usr/share/doc/php-doc/html/function.<c-r><c-w>.html > /dev/null 2>&1<cr><cr>
+au FileType php let g:phpqa_codecoverage_file = projectroot#guess() . "/build/logs/clover.xml"
 
 let g:sparkupNextMapping = '<c-g>'
 
@@ -312,8 +313,13 @@ let NERDTreeWinSize = 50
 "nnoremap <silent> <buffer> <cr> :PhpSearchContext<cr>
 nmap <silent> <leader>d <Plug>DashGlobalSearch
 
-noremap <Leader>/ :NERDTreeToggle<CR>
 noremap <Leader>? :NERDTreeFind<CR>
+
+nmap <silent> <Leader>/ :call g:WorkaroundNERDTreeToggle()<CR>
+
+function! g:WorkaroundNERDTreeToggle()
+  try | :NERDTreeToggle | catch | :NERDTree | endtry
+endfunction
 
 nnoremap Q <nop>
 
@@ -502,3 +508,13 @@ augroup END
 
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" Don't run messdetector on save (default = 1)
+let g:phpqa_messdetector_autorun = 0
+
+" Don't run codesniffer on save (default = 1)
+let g:phpqa_codesniffer_autorun = 0
+
+
+" Close buffer but keep split
+nmap <Leader>d :b#<bar>bd#<bar>b<CR>

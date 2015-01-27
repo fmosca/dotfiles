@@ -41,3 +41,5 @@
 	templatedir = ~/.git_template
 [merge]
 	tool = meld
+[push]
+	default = simple
