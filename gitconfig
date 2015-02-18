@@ -22,7 +22,7 @@
 [core]
 	excludesfile = /Users/fra/.gitignore
     quotepath = false
-	editor = mvim -v
+	editor = vim
     precomposeunicode = true
 
 [difftool "sourcetree"]

@@ -199,6 +199,13 @@ noremap   <Leader>t :ProjectRootExe CommandT<CR>
 noremap   <Leader>T :CommandTFlush<CR>:ProjectRootExe CommandT<CR>
 cmap w!! w !sudo tee % >/dev/null
 
+
+if &term =~ "xterm" || &term =~ "screen"
+    let g:CommandTCancelMap = ['<ESC>', '<C-c>']
+    let g:CommandTSelectNextMap = ['<C-j>', '<ESC>OB']
+    let g:CommandTSelectPrevMap = ['<C-k>', '<ESC>OA']
+endif
+
 " http://vim.wikia.com/wiki/View_text_file_in_two_columns
 "noremap <silent> <Leader>f :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
 noremap   <Leader>f :MPage 2<CR>
@@ -387,7 +394,7 @@ let g:airline_powerline_fonts = 1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']  
 let g:syntastic_php_phpcs_args='--report=csv --standard=PSR2'
 
-let g:phpunit_command = "Dispatch /usr/local/bin/phpunit -c app --stop-on-failure --stop-on-error {test}"
+let g:phpunit_command = "Dispatch /usr/local/bin/php ./bin/phpunit -c app --stop-on-failure --stop-on-error {test}"
 
 let g:rootmarkers = ['.svn', '.git', '.proj']
 noremap <leader>mf :ProjectRootExe call PHPUnitRunCurrentFile()<cr>
@@ -396,10 +403,10 @@ nnoremap <leader>mp :ProjectRootExe call PHPUnitRunPreviousTest()<cr>
 nnoremap <leader>ss :ProjectRootExe PhpSpecSwitch<cr>
 nnoremap <C-i> :ProjectRootExe Ack! <C-r><C-w><CR>
 
-aug QFClose
-  au!
-  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
-aug END
+"aug QFClose
+"  au!
+"  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+"aug END
 
 
 nnoremap <leader>q :call QuickfixToggle()<cr>
@@ -518,3 +525,6 @@ let g:phpqa_codesniffer_autorun = 0
 
 " Close buffer but keep split
 nmap <Leader>d :b#<bar>bd#<bar>b<CR>
+
+
+
