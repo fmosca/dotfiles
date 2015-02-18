@@ -32,8 +32,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export PATH=~/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH
-export EDITOR="mvim -f"
-export VISUAL="mvim -f"
+export EDITOR="vim"
+export VISUAL="vim"
 export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 # export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:/usr/local/mysql/lib/"
@@ -47,10 +47,8 @@ export INFOPATH=$INFOPATH:/opt/local/share/info
 
 export DIRSTACKSIZE=8
 setopt autopushd pushdminus pushdsilent pushdtohome
-alias vim='mvim'
 alias zcat='gzcat'
 alias ff='find . -iname'
-alias 'sudo vim'='sudo mvim'
 
 alias pear="php /usr/lib/php/pear/pearcmd.php" 
 alias pecl="php /usr/lib/php/pear/peclcmd.php" 
