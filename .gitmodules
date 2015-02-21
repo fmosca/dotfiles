@@ -61,9 +61,6 @@
 [submodule "vim/bundle/projectroot"]
 	path = vim/bundle/projectroot
 	url = git://github.com/dbakker/vim-projectroot.git
-[submodule "vim/bundle/command-t"]
-	path = vim/bundle/command-t
-	url = git@github.com:wincent/Command-T.git
 [submodule "vim/bundle/php-syntax"]
 	path = vim/bundle/php-syntax
 	url = git@github.com:joshtronic/php.vim
@@ -115,3 +112,27 @@
 [submodule "vim/bundle/vim-phpqa"]
 	path = vim/bundle/vim-phpqa
 	url = https://github.com/joonty/vim-phpqa
+[submodule "vim/bundle/phpcomplete.vim"]
+	path = vim/bundle/phpcomplete.vim
+	url = https://github.com/shawncplus/phpcomplete.vim.git
+[submodule "vim/bundle/vim-easy-align"]
+	path = vim/bundle/vim-easy-align
+	url = https://github.com/junegunn/vim-easy-align.git
+[submodule "vim/bundle/vim-php-namespace"]
+	path = vim/bundle/vim-php-namespace
+	url = https://github.com/arnaud-lb/vim-php-namespace.git
+[submodule "vim/bundle/vim-symfony"]
+	path = vim/bundle/vim-symfony
+	url = https://github.com/docteurklein/vim-symfony.git
+[submodule "vim/bundle/unite"]
+	path = vim/bundle/unite
+	url = https://github.com/Shougo/unite.vim.git
+[submodule "vim/bundle/vimproc"]
+	path = vim/bundle/vimproc
+	url = https://github.com/Shougo/vimproc.vim.git
+[submodule "vim/bundle/phpcomplete-extended"]
+	path = vim/bundle/phpcomplete-extended
+	url = https://github.com/m2mdas/phpcomplete-extended.git
+[submodule "vim/bundle/neocomplete"]
+	path = vim/bundle/neocomplete
+	url = https://github.com/Shougo/neocomplete.vim.git

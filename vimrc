@@ -195,9 +195,27 @@ noremap   <Leader>c :close<CR>
 noremap   <Leader>s V`] 
 noremap   <Leader>~ :lcd %:p:h<CR>
 noremap   <Leader>` :ProjectRootCD<CR>
-noremap   <Leader>t :ProjectRootExe CommandT<CR>
-noremap   <Leader>T :CommandTFlush<CR>:ProjectRootExe CommandT<CR>
+"noremap   <Leader>t :ProjectRootExe CommandT<CR>
+"noremap   <Leader>T :CommandTFlush<CR>:ProjectRootExe CommandT<CR>
 cmap w!! w !sudo tee % >/dev/null
+
+" unite
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap   <Leader>t :<C-u>UniteWithProjectDir -start-insert -auto-preview buffer file file_rec/async:!<CR>
+nnoremap <C-b>:Unite -quick-match buffer<cr>
+nnoremap <C-i> :ProjectRootExe Unite grep:.<CR><C-r><C-w><CR>
+nnoremap <C-I> :ProjectRootExe Unite grep:.<CR>
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts =
+      \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
+      \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'' ' .
+      \ '--ignore ''**/*.pyc'''
+let g:unite_source_grep_recursive_opt = ''
+
+" Lower the delay of escaping out of other modes
+" set timeout timeoutlen=1000 ttimeoutlen=1
+set timeout timeoutlen=200 ttimeoutlen=1
+
 
 
 if &term =~ "xterm" || &term =~ "screen"
@@ -218,6 +236,9 @@ set backupdir=/Users/fra/.backup
 
 au FileType php nnoremap <Leader>p :!uzbl -g maximized /usr/share/doc/php-doc/html/function.<c-r><c-w>.html > /dev/null 2>&1<cr><cr>
 au FileType php let g:phpqa_codecoverage_file = projectroot#guess() . "/build/logs/clover.xml"
+au  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+
+let g:phpcomplete_index_composer_command = '/usr/local/bin/composer'
 
 let g:sparkupNextMapping = '<c-g>'
 
@@ -401,7 +422,6 @@ noremap <leader>mf :ProjectRootExe call PHPUnitRunCurrentFile()<cr>
 nnoremap <leader>mt :ProjectRootExe call PHPUnitRunCurrentTest()<cr>
 nnoremap <leader>mp :ProjectRootExe call PHPUnitRunPreviousTest()<cr>
 nnoremap <leader>ss :ProjectRootExe PhpSpecSwitch<cr>
-nnoremap <C-i> :ProjectRootExe Ack! <C-r><C-w><CR>
 
 "aug QFClose
 "  au!
@@ -527,4 +547,42 @@ let g:phpqa_codesniffer_autorun = 0
 nmap <Leader>d :b#<bar>bd#<bar>b<CR>
 
 
+" neocomplete
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
 
+" Recommended key-mappings.
+" " <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+    " return neocomplete#close_popup() . "\<CR>"
+    " For no inserting <CR> key.
+    return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" AutoComplPop like behavior.
+" let g:neocomplete#enable_auto_select = 3
+
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
