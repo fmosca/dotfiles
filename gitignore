@@ -4,3 +4,4 @@
 .buildpath
 .DS_Store
 composer.lock
+.phpcomplete_extended

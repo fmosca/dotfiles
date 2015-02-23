@@ -218,12 +218,6 @@ set timeout timeoutlen=200 ttimeoutlen=1
 
 
 
-if &term =~ "xterm" || &term =~ "screen"
-    let g:CommandTCancelMap = ['<ESC>', '<C-c>']
-    let g:CommandTSelectNextMap = ['<C-j>', '<ESC>OB']
-    let g:CommandTSelectPrevMap = ['<C-k>', '<ESC>OA']
-endif
-
 " http://vim.wikia.com/wiki/View_text_file_in_two_columns
 "noremap <silent> <Leader>f :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
 noremap   <Leader>f :MPage 2<CR>
@@ -530,10 +524,6 @@ augroup gitctags
     au BufWritePost *.php :call GitExecInPath('git ctags --src-only &')
 augroup END
 
-:imap <C-J> <Plug>snipMateNextOrTrigger
-:smap <C-J> <Plug>snipMateNextOrTrigger
-
-
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Don't run messdetector on save (default = 1)
@@ -586,3 +576,28 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 if !exists('g:neocomplete#sources#omni#input_patterns')
     let g:neocomplete#sources#omni#input_patterns = {}
 endif
+
+" Neosnippet:
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/snippets'
