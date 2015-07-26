@@ -1,49 +1,49 @@
+set nocompatible
+filetype off
 set runtimepath+=~/.vim/bundle/vundle
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-Bundle 'vim-scripts/QFEnter'
-Bundle 'mileszs/ack.vim'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'bling/vim-airline'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-eunuch'
-Bundle 'tpope/vim-five'
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'airblade/vimgutter'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'vim-scripts/LustyJuggler'
-Bundle 'Shougo/neocomplete.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tyok/nerdtree-ack'
-Bundle 'Xuyuanp/nerdtree-plugin'
-Bundle 'jeffkreeftmeijer/vim-numbertoggle'
-Bundle 'joshtronic/php.vim'
-Bundle 'stephpy/vim-phpdoc'
-Bundle 'jonyamo/phpunit.vim'
-Bundle 'dbakker/vim-projectroot'
-Bundle 'vim-scripts/renamer.vim'
-Bundle 'vim-scripts/scratch.vim'
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/vim-snippets'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'gmarik/sudo-gui.vim'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
-Bundle 'majutsushi/tagbar'
-Bundle 'vim-php/tagbar-phpctags.vim'
-Bundle 'tomtom/tlib_vim'
-Bundle 'beyondwords/vim-twig'
-Bundle 'joonty/vdebug'
-Bundle 'junegunn/vim-easy-align'
-Bundle 'arnaud-lb/vim-php-namespace'
-Bundle 'joonty/vim-phpqa'
-Bundle 'rafi/vim-phpspec'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'docteurklein/vim-symfony'
-Bundle 'stephpy/vim-yaml'
-Bundle 'vim-scripts/YankRing.vim'
+Plugin 'gmarik/vundle'
+Plugin 'vim-scripts/QFEnter'
+Plugin 'mileszs/ack.vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-eunuch'
+Plugin 'rizzatti/funcoo.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'vim-scripts/LustyJuggler'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tyok/nerdtree-ack'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plugin 'joshtronic/php.vim'
+Plugin 'stephpy/vim-phpdoc'
+Plugin 'jonyamo/phpunit.vim'
+Plugin 'dbakker/vim-projectroot'
+Plugin 'vim-scripts/renamer.vim'
+Plugin 'vim-scripts/scratch.vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'gmarik/sudo-gui.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/syntastic'
+Plugin 'majutsushi/tagbar'
+Plugin 'vim-php/tagbar-phpctags.vim'
+Plugin 'tomtom/tlib_vim'
+Plugin 'beyondwords/vim-twig'
+Plugin 'joonty/vdebug'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'arnaud-lb/vim-php-namespace'
+Plugin 'joonty/vim-phpqa'
+Plugin 'rafi/vim-phpspec'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'docteurklein/vim-symfony'
+Plugin 'stephpy/vim-yaml'
+Plugin 'vim-scripts/YankRing.vim'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set t_Co=256
@@ -61,7 +61,6 @@ colorscheme jellybeans
 "endif 
 
 set nosmartindent
-set nocompatible
 set pastetoggle=<f2>
 set autoindent
 set nosmarttab
@@ -147,9 +146,7 @@ set gfn=Fantasque\ Sans\ Mono:h14
 "let g:tagbar_phpctags_bin='/opt/phpctags/phpctags'
 nnoremap <silent> <F8> :TagbarToggle<CR>
 
-filetype on
-filetype indent on
-filetype plugin on
+filetype plugin indent on
 
 noremap <C-TAB> :bn!<CR>
 noremap <C-w>   :bd<CR>
