@@ -3,7 +3,7 @@ snippet nn
 
 	namespace ${1:`substitute(substitute(expand("%:p:h"), '.*src/', '', '1'), '/', '\\\\', 'g')`};
 
-	class ${2:`Filename('', 'myClass')`}
+	class ${2:`Filename('', 'myClass')`} ${3}
 	{
-		${3}
+		${4}
 	}
