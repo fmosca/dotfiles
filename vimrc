@@ -1,4 +1,49 @@
-execute pathogen#infect()
+set runtimepath+=~/.vim/bundle/vundle
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'vim-scripts/QFEnter'
+Bundle 'mileszs/ack.vim'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'bling/vim-airline'
+Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-eunuch'
+Bundle 'tpope/vim-five'
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'airblade/vimgutter'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'vim-scripts/LustyJuggler'
+Bundle 'Shougo/neocomplete.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tyok/nerdtree-ack'
+Bundle 'Xuyuanp/nerdtree-plugin'
+Bundle 'jeffkreeftmeijer/vim-numbertoggle'
+Bundle 'joshtronic/php.vim'
+Bundle 'stephpy/vim-phpdoc'
+Bundle 'jonyamo/phpunit.vim'
+Bundle 'dbakker/vim-projectroot'
+Bundle 'vim-scripts/renamer.vim'
+Bundle 'vim-scripts/scratch.vim'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'gmarik/sudo-gui.vim'
+Bundle 'tpope/vim-surround'
+Bundle 'scrooloose/syntastic'
+Bundle 'majutsushi/tagbar'
+Bundle 'vim-php/tagbar-phpctags.vim'
+Bundle 'tomtom/tlib_vim'
+Bundle 'beyondwords/vim-twig'
+Bundle 'joonty/vdebug'
+Bundle 'junegunn/vim-easy-align'
+Bundle 'arnaud-lb/vim-php-namespace'
+Bundle 'joonty/vim-phpqa'
+Bundle 'rafi/vim-phpspec'
+Bundle 'derekwyatt/vim-scala'
+Bundle 'docteurklein/vim-symfony'
+Bundle 'stephpy/vim-yaml'
+Bundle 'vim-scripts/YankRing.vim'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set t_Co=256
@@ -199,18 +244,6 @@ noremap   <Leader>` :ProjectRootCD<CR>
 "noremap   <Leader>T :CommandTFlush<CR>:ProjectRootExe CommandT<CR>
 cmap w!! w !sudo tee % >/dev/null
 
-" unite
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap   <Leader>t :<C-u>UniteWithProjectDir -start-insert -auto-preview buffer file file_rec/async:!<CR>
-nnoremap <C-b>:Unite -quick-match buffer<cr>
-nnoremap <C-i> :ProjectRootExe Unite grep:.<CR><C-r><C-w><CR>
-nnoremap <C-I> :ProjectRootExe Unite grep:.<CR>
-let g:unite_source_grep_command = 'ag'
-let g:unite_source_grep_default_opts =
-      \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
-      \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'' ' .
-      \ '--ignore ''**/*.pyc'''
-let g:unite_source_grep_recursive_opt = ''
 
 " Lower the delay of escaping out of other modes
 " set timeout timeoutlen=1000 ttimeoutlen=1

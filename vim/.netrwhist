@@ -1,8 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_cnt =7
 let g:netrw_dirhist_1='/Volumes/Work/Sites/ald-loyalty/src/Ald/LaunchSiteBundle/Resources/views/Default'
 let g:netrw_dirhist_2='/Volumes/Work/Sites/ald-loyalty/src/Ald/LaunchSiteBundle/Resources/views'
 let g:netrw_dirhist_3='/Volumes/Work/Sites/ald-loyalty/src/Ald/LaunchSiteBundle/Resources'
 let g:netrw_dirhist_4='/Volumes/Work/Sites/ald-loyalty/src/Ald/LaunchSiteBundle/Resources/translations'
 let g:netrw_dirhist_5='/Volumes/Work/Sites/autoricarica-poc/src/Ald/AutoricaricaBundle/.git'
 let g:netrw_dirhist_6='/Volumes/Work/Sites/ald-loyalty/hooks/post-commit-hooks'
+let g:netrw_dirhist_7='/Users/fra/Sites/dnsee/ald-loyalty/src/Ald/CustomerArea'
