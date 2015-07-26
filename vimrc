@@ -44,6 +44,7 @@ Plugin 'derekwyatt/vim-scala'
 Plugin 'docteurklein/vim-symfony'
 Plugin 'stephpy/vim-yaml'
 Plugin 'vim-scripts/YankRing.vim'
+Plugin 'Valloric/YouCompleteMe'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set shell=/bin/bash
@@ -282,6 +283,8 @@ set undodir=/tmp
 noremap <leader><tab> :Scratch<CR>
 
 let sessionman_save_on_exit=1
+
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP 
 
 " PHP documenter script bound to Control-P
 autocmd FileType php inoremap <Leader>p <ESC>:call PhpDocSingle()<CR>i
