@@ -45,6 +45,7 @@ Plugin 'docteurklein/vim-symfony'
 Plugin 'stephpy/vim-yaml'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'kien/ctrlp.vim'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set shell=/bin/bash
@@ -567,34 +568,10 @@ let g:phpqa_codesniffer_autorun = 0
 nmap <Leader>d :b#<bar>bd#<bar>b<CR>
 
 
-
-"" selecta
-" Run a given vim command on the results of fuzzy selecting from a given shell
-" command. See usage below.
-function! SelectaCommand(choice_command, selecta_args, vim_command)
-  try
-    let selection = system(a:choice_command . " | selecta " . a:selecta_args)
-  catch /Vim:Interrupt/
-    " Swallow the ^C so that the redraw below happens; otherwise there will be
-    " leftovers from selecta on the screen
-    redraw!
-    return
-  endtry
-  redraw!
-  exec a:vim_command . " " . selection
-endfunction
-
-" Find all files in all non-dot directories starting in the working directory.
-" Fuzzy select one of those. Open the selected file with :e.
-let selecta_exclude = ""
-            \ . " -not -path '*/\.*' " 
-            \ . " -not -path '*/app/cache/*' " 
-            \ . " -not -path '*\.jpg' "
-            \ . " -not -path '*\.png' "
-let selecta_exclude_vendor = selecta_exclude 
-            \ . " -not -path '*/vendor/*' "
-nnoremap <leader>t :call SelectaCommand("find " . projectroot#guess() . selecta_exclude_vendor . " -type f", "", ":e")<cr>
-nnoremap <leader>tt :call SelectaCommand("find " . projectroot#guess() . selecta_exclude . " -type f", "", ":e")<cr>
+"CtrlP
+let g:ctrlp_map = '<Leader>t'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 
 
