@@ -46,6 +46,7 @@ Plugin 'stephpy/vim-yaml'
 Plugin 'vim-scripts/YankRing.vim'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
+set shell=/bin/bash
 set t_Co=256
 syntax on
 set background=dark
@@ -244,7 +245,7 @@ cmap w!! w !sudo tee % >/dev/null
 
 " Lower the delay of escaping out of other modes
 " set timeout timeoutlen=1000 ttimeoutlen=1
-set timeout timeoutlen=200 ttimeoutlen=1
+set timeout timeoutlen=300 ttimeoutlen=1
 
 
 
@@ -260,9 +261,6 @@ set backupdir=/Users/fra/.backup
 
 au FileType php nnoremap <Leader>p :!uzbl -g maximized /usr/share/doc/php-doc/html/function.<c-r><c-w>.html > /dev/null 2>&1<cr><cr>
 au FileType php let g:phpqa_codecoverage_file = projectroot#guess() . "/build/logs/clover.xml"
-au  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
-
-let g:phpcomplete_index_composer_command = '/usr/local/bin/composer'
 
 let g:sparkupNextMapping = '<c-g>'
 
@@ -296,8 +294,8 @@ let g:pdv_cfg_License = ""
 
 " noremap <C-P> :% ! php_beautifier --filters "Default() DocBlock()"<CR>
 
-inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
-inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
+"inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
+"inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
 
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
@@ -439,7 +437,7 @@ let g:airline_powerline_fonts = 1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']  
 let g:syntastic_php_phpcs_args='--report=csv --standard=PSR2'
 
-let g:phpunit_command = "Dispatch /usr/local/bin/php ./bin/phpunit -c app --stop-on-failure --stop-on-error {test}"
+let g:phpunit_command = "Dispatch bash -i -c '/usr/local/bin/php ./bin/phpunit -c app --stop-on-failure --stop-on-error {test}'"
 
 let g:rootmarkers = ['.svn', '.git', '.proj']
 noremap <leader>mf :ProjectRootExe call PHPUnitRunCurrentFile()<cr>
@@ -593,6 +591,7 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 
+
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -631,3 +630,80 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/snippets'
+let g:neosnippet#disable_runtime_snippets = { "_": 1, }
+
+"" selecta
+" Run a given vim command on the results of fuzzy selecting from a given shell
+" command. See usage below.
+function! SelectaCommand(choice_command, selecta_args, vim_command)
+  try
+    let selection = system(a:choice_command . " | selecta " . a:selecta_args)
+  catch /Vim:Interrupt/
+    " Swallow the ^C so that the redraw below happens; otherwise there will be
+    " leftovers from selecta on the screen
+    redraw!
+    return
+  endtry
+  redraw!
+  exec a:vim_command . " " . selection
+endfunction
+
+" Find all files in all non-dot directories starting in the working directory.
+" Fuzzy select one of those. Open the selected file with :e.
+let selecta_exclude = ""
+            \ . " -not -path '*/\.*' " 
+            \ . " -not -path '*/app/cache/*' " 
+            \ . " -not -path '*\.jpg' "
+            \ . " -not -path '*\.png' "
+let selecta_exclude_vendor = selecta_exclude 
+            \ . " -not -path '*/vendor/*' "
+nnoremap <leader>t :call SelectaCommand("find " . projectroot#guess() . selecta_exclude_vendor . " -type f", "", ":e")<cr>
+nnoremap <leader>tt :call SelectaCommand("find " . projectroot#guess() . selecta_exclude . " -type f", "", ":e")<cr>
+
+
+
+
+""" BEGIN BRACKETED PASTE
+" Code from:
+" http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x
+" then https://coderwall.com/p/if9mda
+" and then https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim
+" to fix the escape time problem with insert mode.
+"
+" Docs on bracketed paste mode:
+" http://www.xfree86.org/current/ctlseqs.html
+" Docs on mapping fast escape codes in vim
+" http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
+
+if !exists("g:bracketed_paste_tmux_wrap")
+  let g:bracketed_paste_tmux_wrap = 1
+endif
+
+function! WrapForTmux(s)
+  if !g:bracketed_paste_tmux_wrap || !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin(ret)
+  set pastetoggle=<f29>
+  set paste
+  return a:ret
+endfunction
+
+execute "set <f28>=\<Esc>[200~"
+execute "set <f29>=\<Esc>[201~"
+map <expr> <f28> XTermPasteBegin("i")
+imap <expr> <f28> XTermPasteBegin("")
+vmap <expr> <f28> XTermPasteBegin("c")
+cmap <f28> <nop>
+cmap <f29> <nop>
+""" END BRACKETED PASTE
