@@ -10,6 +10,7 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-fugitive'
 Plugin 'rizzatti/funcoo.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -21,7 +22,6 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'joshtronic/php.vim'
 Plugin 'stephpy/vim-phpdoc'
-Plugin 'jonyamo/phpunit.vim'
 Plugin 'dbakker/vim-projectroot'
 Plugin 'vim-scripts/renamer.vim'
 Plugin 'vim-scripts/scratch.vim'
@@ -46,6 +46,11 @@ Plugin 'stephpy/vim-yaml'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'kien/ctrlp.vim'
+Plugin 'aklt/plantuml-syntax'
+Plugin 'stephpy/vim-php-cs-fixer'
+Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'janko-m/vim-test'
+Plugin 'leafgarland/typescript-vim'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set shell=/bin/bash
@@ -234,6 +239,13 @@ noremap <silent> <Down>    :wincmd j<CR>
 noremap <silent> <Left>    :wincmd h<CR>
 noremap <silent> <Right>   :wincmd l<CR>
 
+if has('nvim')
+    tnoremap <silent> <Up>      :wincmd k<CR>
+    tnoremap <silent> <Down>    :wincmd j<CR>
+    tnoremap <silent> <Left>    <C-\><C-n><C-w>h<CR>
+    tnoremap <silent> <Right>   :wincmd l<CR>
+endif
+
 
 noremap   <Leader>v :vsplit<CR>
 noremap   <Leader>c :close<CR>
@@ -286,6 +298,9 @@ noremap <leader><tab> :Scratch<CR>
 let sessionman_save_on_exit=1
 
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP 
+let g:ycm_filetype_specific_completion_to_disable = {
+        \ 'php': 1
+        \}
 
 " PHP documenter script bound to Control-P
 autocmd FileType php inoremap <Leader>p <ESC>:call PhpDocSingle()<CR>i
@@ -440,13 +455,16 @@ let g:airline_powerline_fonts = 1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']  
 let g:syntastic_php_phpcs_args='--report=csv --standard=PSR2'
 
-let g:phpunit_command = "Dispatch bash -i -c '/usr/local/bin/php ./bin/phpunit -c app --stop-on-failure --stop-on-error {test}'"
 
 let g:rootmarkers = ['.svn', '.git', '.proj']
-noremap <leader>mf :ProjectRootExe call PHPUnitRunCurrentFile()<cr>
-nnoremap <leader>mt :ProjectRootExe call PHPUnitRunCurrentTest()<cr>
-nnoremap <leader>mp :ProjectRootExe call PHPUnitRunPreviousTest()<cr>
-nnoremap <leader>ss :ProjectRootExe PhpSpecSwitch<cr>
+
+nmap <silent> <leader>mf :ProjectRootExe TestFile<cr>
+nmap <silent> <leader>mt :ProjectRootExe TestNearest<cr>
+nmap <silent> <leader>mp :ProjectRootExe TestLast<cr>
+nmap <silent> <leader>ss :ProjectRootExe PhpSpecSwitch<cr>
+
+let test#php#phpunit#options = '--colors=never -c app --stop-on-failure --stop-on-error '
+let test#strategy = "dispatch"
 
 "aug QFClose
 "  au!
@@ -576,47 +594,18 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 
 
-""" BEGIN BRACKETED PASTE
-" Code from:
-" http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x
-" then https://coderwall.com/p/if9mda
-" and then https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim
-" to fix the escape time problem with insert mode.
-"
-" Docs on bracketed paste mode:
-" http://www.xfree86.org/current/ctlseqs.html
-" Docs on mapping fast escape codes in vim
-" http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
+""" PLANTUML
+let g:plantuml_executable_script='/usr/local/bin/plantuml -tsvg '
 
-if !exists("g:bracketed_paste_tmux_wrap")
-  let g:bracketed_paste_tmux_wrap = 1
-endif
 
-function! WrapForTmux(s)
-  if !g:bracketed_paste_tmux_wrap || !exists('$TMUX')
-    return a:s
-  endif
+""" MAKE
+nnoremap <leader>m :silent make\|redraw!\|cw<CR>
 
-  let tmux_start = "\<Esc>Ptmux;"
-  let tmux_end = "\<Esc>\\"
 
-  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-endfunction
 
-let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+""" SNIPMATE
+imap <C-J> <Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
 
-function! XTermPasteBegin(ret)
-  set pastetoggle=<f29>
-  set paste
-  return a:ret
-endfunction
 
-execute "set <f28>=\<Esc>[200~"
-execute "set <f29>=\<Esc>[201~"
-map <expr> <f28> XTermPasteBegin("i")
-imap <expr> <f28> XTermPasteBegin("")
-vmap <expr> <f28> XTermPasteBegin("c")
-cmap <f28> <nop>
-cmap <f29> <nop>
-""" END BRACKETED PASTE
+let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
