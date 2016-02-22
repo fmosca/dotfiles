@@ -455,9 +455,22 @@ let g:airline_powerline_fonts = 1
 
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']  
 let g:syntastic_php_phpcs_args='--report=csv --standard=PSR2'
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_error_symbol = '❕'
+let g:syntastic_warning_symbol = '🔸'
+let g:syntastic_twig_twiglint_exec = 'php'
+let g:syntastic_twig_twiglint_exe = 'php ~/.composer/vendor/bin/twig-lint'
+let g:syntastic_twig_checkers=['twiglint']
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0 
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_html_tidy_quiet_messages = { "level": "warnings" }
+ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
 let g:rootmarkers = ['.svn', '.git', '.proj']
 
