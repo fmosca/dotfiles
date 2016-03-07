@@ -52,6 +52,8 @@ Plugin 'stephpy/vim-php-cs-fixer'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'janko-m/vim-test'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'henrik/CamelCaseMotion'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set shell=/bin/bash
@@ -96,6 +98,7 @@ set wildignore+=**/cache/**
 set diffopt+=vertical
 set clipboard=unnamed
 set mouse=nicr
+set cursorline
 
 
 " simplify diff colors
@@ -625,7 +628,12 @@ imap <C-J> <Plug>snipMateNextOrTrigger
 smap <C-J> <Plug>snipMateNextOrTrigger
 
 
-let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
+let g:php_cs_fixer_path = "~/.composer/vendor/bin/php-cs-fixer"
+let g:php_cs_fixer_level = "all"
+nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+au FileType php let g:php_cs_fixer_command = g:php_cs_fixer_path . ' --config-file=' . projectroot#guess() . "/.php_cs fix "
+
 
 
 
@@ -664,12 +672,12 @@ augroup jump_to_tags
     for i in range(start, end, width)
       execute "hi CursorLine ctermbg=" . (color + i)
       redraw
-      sleep 6m
+      sleep 1m
     endfor
     for i in range(end, start, -1 * width)
       execute "hi CursorLine ctermbg=" . (color + i)
       redraw
-      sleep 6m
+      sleep 1m
     endfor
 
     execute 'hi ' . old_hi

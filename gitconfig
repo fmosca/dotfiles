@@ -12,6 +12,7 @@
 	main-window-view = HistoryView
 	history-view-vpane-position = 580
 [alias]
+    conflicts = diff --name-only --diff-filter=U
     amend = commit --amend -C HEAD
     meld = !/opt/git-meld/git-meld.pl
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
