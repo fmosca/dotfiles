@@ -21,7 +21,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tyok/nerdtree-ack'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-Plugin 'joshtronic/php.vim'
 Plugin 'stephpy/vim-phpdoc'
 Plugin 'dbakker/vim-projectroot'
 Plugin 'vim-scripts/renamer.vim'
@@ -54,15 +53,22 @@ Plugin 'janko-m/vim-test'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'henrik/CamelCaseMotion'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'chrisbra/csv.vim'
+Plugin 'vim-scripts/closetag.vim'
+Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'vim-scripts/mayansmoke'
+Plugin 'jonathanfilip/vim-lucius'
+Plugin 'terryma/vim-multiple-cursors'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set shell=/bin/bash
 set t_Co=256
 syntax on
-set background=dark
+set background=light
 "let g:solarized_termcolors=256
 "let g:solarized_termtrans = 1
-colorscheme jellybeans
+colorscheme lucius
 "if has('gui_running')
 "  set t_Co=256
 "  colorscheme wombat
@@ -292,7 +298,7 @@ set guioptions-=L
 "
 set colorcolumn=85
 hi ColorColumn guibg=#383838
-hi ColorColumn ctermbg=236
+"hi ColorColumn ctermbg=236
 set undofile
 set undodir=/tmp
 " set rnu
@@ -301,7 +307,7 @@ noremap <leader><tab> :Scratch<CR>
 
 let sessionman_save_on_exit=1
 
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP 
+" autocmd FileType php set omnifunc=phpcomplete#CompletePHP 
 let g:ycm_filetype_specific_completion_to_disable = {
         \ 'php': 1
         \}
@@ -451,6 +457,7 @@ command! -range=% FormatXML <line1>,<line2>call DoFormatXML()
 vmap <silent> <leader>x :FormatXML<CR>
 
 let g:airline_powerline_fonts = 1
+let g:airline_theme='lucius'
 
 "let g:airline_left_sep='▙ '
 "let g:airline_right_sep='▟'
@@ -594,6 +601,10 @@ augroup END
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
+" closetag.vim
+au Filetype html,xml,xsl,markdown source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+
+
 " Don't run messdetector on save (default = 1)
 let g:phpqa_messdetector_autorun = 0
 
@@ -686,3 +697,32 @@ augroup jump_to_tags
   command! -nargs=0 Pulse call s:Pulse()
 augroup END
 " }}}
+
+
+function! PhpSyntaxOverride()
+  hi! def link phpDocTags  phpDefine
+  hi! def link phpDocParam phpType
+  hi! def link phpParent phpType
+endfunction
+
+augroup phpSyntaxOverride
+  autocmd!
+  autocmd FileType php call PhpSyntaxOverride()
+augroup END
+
+
+" open the selection in the browser so it can be copied as rich text
+function! SendCodeToHTML() range
+    execute a:firstline . "," . a:lastline . 'TOhtml'
+    let tmpfile = tempname() . ".html"
+    silent write tmpfile
+    silent !open tmpfile
+    sleep 2
+    silent !rm -f tmpfile
+    bd!
+    redraw!
+endfunction
+
+noremap <leader>b :call SendCodeToHTML()<CR>
+
+
