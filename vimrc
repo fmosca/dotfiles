@@ -60,6 +60,7 @@ Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-scripts/mayansmoke'
 Plugin 'jonathanfilip/vim-lucius'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'amerlyq/vim-focus-autocmd'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set shell=/bin/bash
@@ -279,6 +280,7 @@ noremap   <Leader>f :MPage 2<CR>
 
 
 
+nnoremap <Leader>h :call SendCodeToHTML()<CR>
 
 set directory=/tmp
 set backupdir=/Users/fra/.backup
@@ -666,38 +668,30 @@ augroup jump_to_tags
   nnoremap <c-]> <c-]>mzzvzz15<c-e>`z:Pulse<cr>
   nnoremap <c-\> <c-w>v<c-]>mzzMzvzz15<c-e>`z:Pulse<cr>
 
-  " Pulse Line (thanks Steve Losh)
-  function! s:Pulse() " {{{
-    redir => old_hi
-    silent execute 'hi CursorLine'
-    redir END
-    let old_hi = split(old_hi, '\n')[0]
-    let old_hi = substitute(old_hi, 'xxx', '', '')
-
-    let steps = 8
-    let width = 1
-    let start = width
-    let end = steps * width
-    let color = 233
-
-    for i in range(start, end, width)
-      execute "hi CursorLine ctermbg=" . (color + i)
-      redraw
-      sleep 1m
-    endfor
-    for i in range(end, start, -1 * width)
-      execute "hi CursorLine ctermbg=" . (color + i)
-      redraw
-      sleep 1m
-    endfor
-
-    execute 'hi ' . old_hi
-  endfunction " }}}
 
   command! -nargs=0 Pulse call s:Pulse()
 augroup END
 " }}}
 
+if has('gui_running')
+    let g:PulseColorList = [ '#2a2a2a', '#333333', '#3a3a3a', '#444444', '#4a4a4a' ]
+    let g:PulseColorattr = 'guibg'
+else
+    let g:PulseColorList = [ 'White', 'DarkGrey', 'White' ]
+    let g:PulseColorattr = 'ctermbg'
+endif
+
+function! s:Pulse()
+    for pulse in g:PulseColorList
+        execute 'hi CursorLine ' . g:PulseColorattr . '=' . pulse
+        redraw
+        sleep 10m
+    endfor
+    execute 'hi CursorLine ' . g:PulseColorattr . '=NONE'
+endfunction
+  
+
+" autocmd FocusGained * call s:Pulse()
 
 function! PhpSyntaxOverride()
   hi! def link phpDocTags  phpDefine
@@ -722,7 +716,4 @@ function! SendCodeToHTML() range
     bd!
     redraw!
 endfunction
-
-noremap <leader>b :call SendCodeToHTML()<CR>
-
 
