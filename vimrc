@@ -48,7 +48,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'kien/ctrlp.vim'
 Plugin 'aklt/plantuml-syntax'
 Plugin 'stephpy/vim-php-cs-fixer'
-Plugin 'shawncplus/phpcomplete.vim'
+"Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'janko-m/vim-test'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'ConradIrwin/vim-bracketed-paste'
@@ -61,6 +61,7 @@ Plugin 'vim-scripts/mayansmoke'
 Plugin 'jonathanfilip/vim-lucius'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'amerlyq/vim-focus-autocmd'
+Plugin 'ervandew/supertab'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set shell=/bin/bash
@@ -106,6 +107,9 @@ set diffopt+=vertical
 set clipboard=unnamed
 set mouse=nicr
 set cursorline
+
+" remove | on window separator
+set fillchars+=vert:\ 
 
 
 " simplify diff colors
@@ -220,6 +224,11 @@ autocmd BufEnter * if expand("%:p:h") !~ '^fugitive://' | silent! lcd %:p:h | en
 
 let &guicursor = &guicursor . ",a:blinkon0"
 
+" pressing F5 in the command window (q:) executes the command and keep the
+" command-window open
+autocmd CmdwinEnter * nnoremap <buffer> <F5> :let g:CmdWindowLineMark=line(".")<CR><CR>q::execute "normal ".g:CmdWindowLineMark."G"<CR>
+
+
 
 set cmdheight=2
 set matchpairs=(:),{:},[:]
@@ -314,6 +323,20 @@ let g:ycm_filetype_specific_completion_to_disable = {
         \ 'php': 1
         \}
 
+let g:ycm_auto_trigger=0
+
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabLongestHighlight = 1
+let g:SuperTabNoCompleteBefore = []
+let g:SuperTabNoCompleteAfter = ['^', '\s']  
+
+
+
+
 " PHP documenter script bound to Control-P
 autocmd FileType php inoremap <Leader>p <ESC>:call PhpDocSingle()<CR>i
 autocmd FileType php nnoremap <Leader>p :call PhpDocSingle()<CR>
@@ -336,6 +359,7 @@ autocmd InsertLeave * :set number
 inoremap <C-space> <C-x><C-o>
 
 set splitbelow
+set splitright
 
 set completeopt=longest,menuone
 set complete-=i
@@ -542,8 +566,8 @@ let g:tagbar_ctags_bin = "/usr/local/bin/ctags"
 inoremap <Leader>u <C-O>:call PhpInsertUse()<CR>
 noremap <Leader>u :call PhpInsertUse()<CR>
 
-inoremap <Leader>e <C-O>:call PhpExpandClass()<CR>
-noremap <Leader>e :call PhpExpandClass()<CR>
+inoremap <Leader>ex <C-O>:call PhpExpandClass()<CR>
+noremap <Leader>ex :call PhpExpandClass()<CR>
 
 " Start interactive EasyAlign in visual mode
 vmap <Enter> <Plug>(EasyAlign)
