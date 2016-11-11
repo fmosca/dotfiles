@@ -45,7 +45,7 @@ Plugin 'docteurklein/vim-symfony'
 Plugin 'stephpy/vim-yaml'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'aklt/plantuml-syntax'
 Plugin 'stephpy/vim-php-cs-fixer'
 "Plugin 'shawncplus/phpcomplete.vim'
@@ -62,6 +62,10 @@ Plugin 'jonathanfilip/vim-lucius'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'amerlyq/vim-focus-autocmd'
 Plugin 'ervandew/supertab'
+Plugin 'lambdatoast/elm.vim'
+Plugin 'elmcast/elm-vim'
+Plugin 'rhysd/conflict-marker.vim'
+Plugin 'fatih/vim-go'
 
 let $PATH = "/Users/fra/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/opt/local/bin" 
 set shell=/bin/bash
@@ -289,7 +293,7 @@ noremap   <Leader>f :MPage 2<CR>
 
 
 
-nnoremap <Leader>h :call SendCodeToHTML()<CR>
+noremap <Leader>h :call SendCodeToHTML()<CR>
 
 set directory=/tmp
 set backupdir=/Users/fra/.backup
@@ -647,6 +651,7 @@ let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_max_files = 0
+let g:ctrlp_lazy_update = 1
 
 
 
@@ -741,3 +746,5 @@ function! SendCodeToHTML() range
     redraw!
 endfunction
 
+" https://github.com/avh4/elm-format#elm-vim-installation
+let g:elm_format_autosave = 1
